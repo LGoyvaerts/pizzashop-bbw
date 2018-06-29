@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+	<title>G&amp;Sahli PizzaShop</title>
+</h:head>
+<h:body>
+	<h:outputText value="G&amp;Sahli Pizzashop" style="font-weigth:bold" />
+	<br></br>
+
+	<br></br>
+	<h:form>
+		<h:panelGrid id="panelOne" columns="3" cellpadding="10"
+			cellspacing="1">
+			<h:outputText value="Vorname: " />
+			<h:outputText value="#{user.firstname}" id="firstname" />
+		</h:panelGrid>
+		<h:panelGrid id="panelTwo" columns="3" cellpadding="10"
+			cellspacing="1">
+			<h:outputText value="Nachname: " />
+			<h:outputText value="#{user.lastname}" id="lastname" />
+		</h:panelGrid>
+		<h:panelGrid id="panelThree" columns="3" cellpadding="10"
+			cellspacing="1">
+			<h:outputText value="Email: " />
+			<h:outputText value="#{user.email}" id="email" />
+		</h:panelGrid>
+		<h:panelGrid id="panelFour" columns="3" cellpadding="10"
+			cellspacing="1">
+			<h:outputText value="Strasse: " />
+			<h:outputText value="#{user.street}" />
+		</h:panelGrid>
+		<h:panelGrid id="panelFive" columns="3" cellpadding="10"
+			cellspacing="1">
+			<h:outputText value="PLZ: " />
+			<h:outputText value="#{user.postcode}" />
+		</h:panelGrid>
+		<h:panelGrid id="panelSix" columns="3" cellpadding="10"
+			cellspacing="1">
+			<h:outputText value="Ort: " />
+			<h:outputText value="#{user.city}" />
+		</h:panelGrid>
+		<br></br>
+		<br></br>
+
+		<ui:repeat var="pizza" value="#{user.pizzashopdao.pizzas}">
+			<h:panelGrid columns="2" cellpadding="10" cellspacing="1">
+				<h:outputText value="Name: #{pizza.name}" outcome="pizza" />
+				<h:outputText value="Preis: #{pizza.price}" outcome="pizza" />
+			</h:panelGrid>
+		</ui:repeat>
+
+
+
+		<br></br>
+		<br></br>
+		<br></br>
+		<h:outputText value="Copyright 2018 G&amp;Sahli Company" />
+	</h:form>
+</h:body>
+</html>
