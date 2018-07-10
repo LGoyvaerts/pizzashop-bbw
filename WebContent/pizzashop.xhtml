@@ -1,3 +1,4 @@
+<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -5,60 +6,74 @@
 	xmlns:h="http://java.sun.com/jsf/html">
 
 <h:head>
-	<title>G&amp;Sahli PizzaShop</title>
+	<ui:insert name="head">
+		<ui:include src="/templates/head.xhtml" />
+	</ui:insert>
 </h:head>
 <h:body>
-	<h:outputText value="G&amp;Sahli Pizzashop" style="font-weigth:bold" />
-	<br></br>
+	<ui:insert name="scripts">
+		<ui:include src="/templates/js-scripts.xhtml" />
+	</ui:insert>
+
+	<ui:insert name="navbar">
+		<ui:include src="/templates/navbar.xhtml" />
+	</ui:insert>
+
+	<!-- Pizza List Start -->
+
+	<div class="container" style="margin-top: 50px;">
+		<div class="row">
+
+			<ui:repeat var="pizza" value="#{user.pizzashopdao.pizzas}">
+				<div class="col-xs-12 col-sm-6 col-md-3">
+					<div class="col-item">
+						<div class="post-img-content">
+							<img src="#{pizza.imagepath}" class="img-responsive" /> <span
+								class="post-title"> <b>Pizza</b><br></br> <b>Clássico</b></span>
+							<span class="round-tag">-15%</span>
+						</div>
+						<div class="info">
+							<div class="row">
+								<div class="price col-md-6">
+									<h5>#{pizza.name}</h5>
+									<h5 class="price-text-color">#{pizza.price} CHF</h5>
+								</div>
+								<!--
+									<div class="rating hidden-sm col-md-6">
+										<h5 class="price-text-color">14.99€</h5>
+									</div>
+									 -->
+							</div>
+							<div class="separator clear-left">
+								<p class="btn-add">
+									<i class="fa fa-shopping-cart"></i><a href="#"
+										class="hidden-sm">Add to cart</a>
+								</p>
+								<p class="btn-details">
+									<i class="fa fa-list"></i><a href="#" class="hidden-sm">More
+										details</a>
+								</p>
+							</div>
+							<div class="clearfix"></div>
+						</div>
+					</div>
+				</div>
+			</ui:repeat>
+
+		</div>
+	</div>
+
+
+	<!-- Pizza List End -->
 
 	<br></br>
-	<h:form>
-		<h:panelGrid id="panelOne" columns="3" cellpadding="10"
-			cellspacing="1">
-			<h:outputText value="Vorname: " />
-			<h:outputText value="#{user.firstname}" id="firstname" />
-		</h:panelGrid>
-		<h:panelGrid id="panelTwo" columns="3" cellpadding="10"
-			cellspacing="1">
-			<h:outputText value="Nachname: " />
-			<h:outputText value="#{user.lastname}" id="lastname" />
-		</h:panelGrid>
-		<h:panelGrid id="panelThree" columns="3" cellpadding="10"
-			cellspacing="1">
-			<h:outputText value="Email: " />
-			<h:outputText value="#{user.email}" id="email" />
-		</h:panelGrid>
-		<h:panelGrid id="panelFour" columns="3" cellpadding="10"
-			cellspacing="1">
-			<h:outputText value="Strasse: " />
-			<h:outputText value="#{user.street}" />
-		</h:panelGrid>
-		<h:panelGrid id="panelFive" columns="3" cellpadding="10"
-			cellspacing="1">
-			<h:outputText value="PLZ: " />
-			<h:outputText value="#{user.postcode}" />
-		</h:panelGrid>
-		<h:panelGrid id="panelSix" columns="3" cellpadding="10"
-			cellspacing="1">
-			<h:outputText value="Ort: " />
-			<h:outputText value="#{user.city}" />
-		</h:panelGrid>
-		<br></br>
-		<br></br>
-
-		<ui:repeat var="pizza" value="#{user.pizzashopdao.pizzas}">
-			<h:panelGrid columns="2" cellpadding="10" cellspacing="1">
-				<h:outputText value="Name: #{pizza.name}" outcome="pizza" />
-				<h:outputText value="Preis: #{pizza.price}" outcome="pizza" />
-			</h:panelGrid>
-		</ui:repeat>
-
-
-
-		<br></br>
-		<br></br>
-		<br></br>
-		<h:outputText value="Copyright 2018 G&amp;Sahli Company" />
-	</h:form>
+	<br></br>
+	<br></br>
+	<div class="alert alert-danger alert-dismissible sticky-bottom">
+		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+		<strong>Info!</strong> Unfortionately it is now allowed to order
+		Pizzas in this Shop!
+	</div>
+	<h:outputText value="Copyright 2018 G&amp;Sahli Company" />
 </h:body>
 </html>
