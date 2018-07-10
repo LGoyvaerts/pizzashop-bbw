@@ -1,6 +1,8 @@
 package ch.bbw.pizzashop.dao;
 
 import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -12,13 +14,14 @@ import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
+import ch.bbw.pizzashop.UserBean;
 import ch.bbw.pizzashop.entity.Pizza;
 
 @Named("pizzadao")
-@ApplicationScoped
+@RequestScoped
 public class PizzaShopDAO implements Serializable {
 
 	/**
@@ -74,17 +77,36 @@ public class PizzaShopDAO implements Serializable {
 	public List<Pizza> getPizzas() throws Exception {
 		try (Statement statement = connection.createStatement()) {
 
-			String sql = "SELECT id, name, price, imagepath FROM pizzas;";
+			String sql = "SELECT * FROM pizzas;";
 			ResultSet rs = statement.executeQuery(sql);
 
 			while (rs.next()) {
-				Pizza pizza = new Pizza(rs.getInt("id"), rs.getString("name"), rs.getFloat("price"),
+				Pizza pizza = new Pizza(rs.getInt("ID"), rs.getString("name"), rs.getFloat("price"),
 						rs.getString("imagepath"));
 				pizzas.add(pizza);
 			}
 			return pizzas;
 		}
 
+	}
+
+	public void createUser(UserBean user) throws Exception {
+		try (Statement statement = connection.createStatement()) {
+			int isAdmin = 0;
+			if (user.isAdmin()) {
+				isAdmin = 1;
+			}
+			String hashedPassword = "";
+			MessageDigest digest = MessageDigest.getInstance("SHA-256");
+			byte[] hash = digest.digest(user.getPassword().getBytes(StandardCharsets.UTF_8));
+			hashedPassword = hash.toString();
+			String sql = "INSERT INTO users(firstname, lastname, email, street, postcode, city, password, isadmin) VALUES('"
+					+ user.getFirstname() + "', '" + user.getLastname() + "', '" + user.getEmail() + "', '"
+					+ user.getStreet() + "', '" + user.getPostcode() + "', '" + user.getCity() + "', '" + hashedPassword
+					+ "', '" + isAdmin + "');";
+			statement.executeUpdate(sql);
+			log.info("USER CREATED: " + user.getFirstname() + ", " + user.getLastname());
+		}
 	}
 
 	public void setPizzas(List<Pizza> pizzas) {
