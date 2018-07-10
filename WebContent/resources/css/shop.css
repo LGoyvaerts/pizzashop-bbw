@@ -3,10 +3,10 @@
 	;
 
 .pagecontent {
-    padding-top: 10px;
-    padding-right: 10px;
-    padding-bottom: 10px;
-    padding-left: 10px;
+	padding-top: 10px;
+	padding-right: 10px;
+	padding-bottom: 10px;
+	padding-left: 10px;
 }
 
 img {
@@ -167,4 +167,25 @@ Hover the image
 	font-size: 17px;
 	color: #FFF;
 	font-weight: bold;
+}
+
+input:invalid {
+	background-color: #ffdddd;
+}
+
+form:invalid {
+	border: 5px solid #ffdddd;
+}
+
+input:valid {
+	background-color: #ddffdd;
+}
+
+form:valid {
+	border: 5px solid #ddffdd;
+}
+
+input:required {
+	border-color: #800000;
+	border-width: 3px;
 }

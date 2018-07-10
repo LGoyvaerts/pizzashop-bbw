@@ -41,6 +41,7 @@ public class UserBean implements Serializable {
 	private Integer postcode;
 	private String city;
 	private boolean isAdmin;
+	private boolean isLoggedIn;
 
 	@Inject
 	private PizzaShopDAO pizzashopdao;
@@ -135,8 +136,17 @@ public class UserBean implements Serializable {
 		userBean.setPostcode(postcode);
 		userBean.setCity(city);
 		userBean.setAdmin(isAdmin);
+		isLoggedIn = true;
 		pizzashopdao.createUser(userBean);
 		return "/pizzashop.xhtml?faces-redirect=true";
+	}
+
+	public boolean isLoggedIn() {
+		return isLoggedIn;
+	}
+
+	public void setLoggedIn(boolean isLoggedIn) {
+		this.isLoggedIn = isLoggedIn;
 	}
 
 }
